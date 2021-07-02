@@ -1,0 +1,109 @@
+@charset "utf-8";
+/* CSS Document */
+	.shadowback{
+		box-shadow: 0 2px 6px rgba(100,100,100,.3);
+	}
+	.back{
+		background: #FFFFFF;	
+	}
+	body{
+		background: #383838;
+		margin: 0;
+	}
+	header::before{/*这个伪元素在header的上方 给header下方添加一条渐变线*/
+		background: #000 linear-gradient(to right,#00FFFB,#0100FF);
+		height: 1px;
+		top: 50px;
+		position: absolute;
+		width: 100%;
+		content: "";/*伪元素的必需品*/
+	}
+	header{
+		position: fixed;/*这个属性设置元素对浏览器定位*/
+		z-index: 999;/*这个元素值越高堆叠顺序越前*/
+		margin: 0;/*设置边距为0*/
+		padding: 0;
+		list-style: none;
+		width: 100%;
+		border-bottom: 1px solid #504F4F;/*下边框的样式*/
+		background-color: #FFFFFF;
+		opacity: 0.8;/*不透明度*/
+		height: 50px;
+}
+	header ul li h2{
+		font-size: 20px;
+	}
+	.ul-line li{
+		float: left;
+		display: inline-block;
+		top: 15%;
+		margin-top: 0;
+		margin-left: 1%; 
+	}
+	article{
+		width:70%;
+		margin: auto;
+		
+	}/*整个article板块的设置*/
+	.tail{
+		border-top: 3px double #FFF1F1;
+		text-align: center;
+		padding-bottom: 30px;
+	}
+	.tail li{
+		margin: 0;
+		padding-top: 30px;
+		width: 33%;
+		display: inline-block;
+	}
+	.tail a,.tail p{
+		margin: 0;
+		padding: 0;
+		color:aliceblue;
+		font-size: 13px;
+		text-shadow: #000 2px 0 0, #000 0 2px 0, #000 -2px 0 0, #000 0 -2px 0;/*实现描边*/
+	}
+	a:link{/*link选择器选择所有未被选中的元素*/
+		text-decoration: none;
+	}
+	a:hover{
+		text-decoration: underline;
+	}
+
+	.time{
+		float: right;
+		font-size: 10px;
+		color: #B8B8B8;
+		padding-right: 5px;
+	}
+	.borderlist{
+		position: relative;
+		line-height: 50px;
+		padding-left: 10px;
+		margin-bottom: 20px;
+	}
+	.borderlist::before{
+		content: "";
+		height: 50px;
+		width: 2px;
+		background: #FF5F13;
+		position: absolute;
+		left: 0px;
+		top: 0px;
+	}
+	.aline{
+		margin-bottom: 40px;
+		line-height: 50px;
+		margin-left: 5%;
+		text-align: center;
+		width: 90%;
+	}
+	.introduction{
+		color: #6D6D6D;
+		min-height: 60px;
+		padding: 20px;
+		margin-bottom: 40px;
+	}
+	a{
+		color: #000000;
+	}

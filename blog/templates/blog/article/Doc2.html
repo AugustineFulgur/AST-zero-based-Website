@@ -1,0 +1,67 @@
+{% extends '__template__.html' %}
+{% load static %}
+
+{% block AST_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'blogsrc/css/template.css' %}"/>
+<script src="{% static 'blogsrc/js/getroot.js' %}"></script>	
+{% endblock AST_head %}
+
+{% block AST_aside %}
+	<aside class="rootaside shadowback" id="jsaside">
+		<ul class="ulaside" id="ulaside">
+			<il class="root">目录</il>
+		</ul>	
+	</aside>	
+{% endblock AST_aside %}
+
+{% block AST_content %}
+		<div class="title">{{article.docname}}</div>
+		<div class="info">创建时间：{{article.datecreate}}&#12288;&#12288;&#12288;最后修改时间：{{article.datelast}}&#12288;分区：{{article.typename}}&#12288;系列：{{article.setname|default:"无所属系列"}}</div>
+		<div class="text">
+			<div style="width: 97%;padding: 20px 10px;margin:auto;min-height: 500px;" id="article">
+				<h2>第一篇文章</h2><p>第一张图片：</p><p><img src={% static 'articlesrc/1.jpg' %} ></p><h4>第一份代码</h4><p><pre></p><p><span class="pydocx-left"><span style="color:#98676A">class</span> <span style="color:#F06431">Articles</span><span style="color:#D3AF86">(</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">Model</span><span style="color:#D3AF86">):</span></span></p><p><span class="pydocx-left">    <span style="color:#A57A4C"># Articles</span><span style="color:#A57A4C">表</span><span style="color:#A57A4C"> docname</span><span style="color:#A57A4C">文章名</span><span style="color:#A57A4C"> datecreate</span><span style="color:#A57A4C">创建日期</span><span style="color:#A57A4C"> datelast</span><span style="color:#A57A4C">最后一次修改日期</span><span style="color:#A57A4C"> id</span><span style="color:#A57A4C">文章</span><span style="color:#A57A4C">id setname</span><span style="color:#A57A4C">文章所属的系列名</span><span style="color:#A57A4C"> typename</span><span style="color:#A57A4C">文章所属的分区名</span></span></p><p><span class="pydocx-left">    <span style="color:#A57A4C"># keywords meta-keywords description meta-description</span></span></p><p><span class="pydocx-left">    <span style="color:#A57A4C"># docname</span><span style="color:#A57A4C">并不包括后缀</span> <span style="color:#A57A4C">也就是</span><span style="color:#A57A4C">docname</span><span style="color:#A57A4C">其实就是文章标题</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">docname</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">CharField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">max_length</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">40</span><span style="color:#D3AF86">,</span><span style="color:#DC3958">blank</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">False</span><span style="color:#D3AF86">)</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">datecreate</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">DateTimeField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">auto_now_add</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">True</span><span style="color:#D3AF86">)</span><span style="color:#A57A4C">#</span><span style="color:#A57A4C">设置</span><span style="color:#A57A4C">date</span><span style="color:#A57A4C">字段为创建日期</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">datelast</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">DateTimeField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">auto_now</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">True</span><span style="color:#D3AF86">)</span><span style="color:#A57A4C">#</span><span style="color:#A57A4C">设置</span><span style="color:#A57A4C">datelast</span><span style="color:#A57A4C">为最后一次修改日期</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">objects</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">Manager</span><span style="color:#D3AF86">()</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">setname</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">CharField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">blank</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">True</span><span style="color:#D3AF86">,</span><span style="color:#DC3958">max_length</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">100</span><span style="color:#D3AF86">)</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">typename</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">CharField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">blank</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">False</span><span style="color:#D3AF86">,</span><span style="color:#DC3958">max_length</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">10</span><span style="color:#D3AF86">)</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">keywords</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">CharField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">max_length</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">40</span><span style="color:#D3AF86">)</span></span></p><p><span class="pydocx-left">    <span style="color:#DC3958">description</span><span style="color:#D3AF86">=</span><span style="color:#F06431">models</span><span style="color:#D3AF86">.</span><span style="color:#F06431">CharField</span><span style="color:#D3AF86">(</span><span style="color:#DC3958">max_length</span><span style="color:#D3AF86">=</span><span style="color:#F79A32">200</span><span style="color:#D3AF86">)</span></span></p><p><span class="pydocx-left">    <span style="color:#98676A">class</span> <span style="color:#F06431">Meta</span><span style="color:#D3AF86">():</span><span style="color:#A57A4C">#</span><span style="color:#A57A4C">倒序排列</span></span></p><p><span class="pydocx-left">        <span style="color:#DC3958">ordering</span><span style="color:#D3AF86">=('</span><span style="color:#889B4A">-datecreate</span><span style="color:#D3AF86">',)</span></span></p><p><span class="pydocx-left">    <span style="color:#A57A4C">#id=models.AutoField(primary_key=True) id</span><span style="color:#A57A4C">会被自动创建</span></span></p><p><span class="pydocx-left">    <span style="color:#98676A">def</span> <span style="color:#7E602C">__str__</span><span style="color:#D3AF86">(self):</span><span style="color:#A57A4C">#</span><span style="color:#A57A4C">返回描述信息</span></span></p><p><span class="pydocx-left">        <span style="color:#98676A">return</span><span style="color:#D3AF86"> self.</span><span style="color:#DC3958">docname</span></span></p><p></pre></p>
+			</div>
+		</div>
+		<div style="margin: 20px 0px;">
+					<div class="explore back shadowback">浏览次数：{{ex_pr.explore}}</div>
+					<div class="prefer back shadowback"><span><botton class="gprefer" id="gprefer" onClick="this.style.color='#FF7275'">❤</botton></span><span id="prenum">{{ex_pr.prefer}}</span></div>
+					<div class="middle back shadowback"></div>
+		</div>	
+		<script>
+		var prefer_=false;
+		$("#gprefer").click(function(){
+		if(prefer_==true){
+			alert("您已经点过啦~");
+			return;
+		}
+		$.ajax({
+			type : "get",
+			url : "/_prefer/{{article.id}}",
+			success : function re(){
+				alert("点赞成功~");
+				$("#prenum").text(Number($("#prenum").text())+1);
+			}
+			   
+			   });
+		prefer_=true;	
+	});
+		</script>
+		<div class="afterarticle shadowback">
+			<div class="login">
+				<textarea name="comment" onClick="clear(this)"placeholder="在这里写下你的评论。" form="commentform"></textarea>
+				<form  class="formcomment" method="post" id="commentform" action="_comment/{{article.id}}">
+					{% csrf_token %}
+					你的名字：<input class="input" type="text" name="name">
+					你的邮箱：<input class="input" type="text" name="mail">
+					<input type="submit" class="bottom" value="评论">
+				</form>	
+			</div>	
+		</div>
+		<div class="com shadowback">
+			{% for i in comments %}
+				<div class="author shadowback">{{i.name}}<img src="{% static 'imageicon/comment.ico' %}" style="float:left"></div>
+				<div class="comment">{{i.comment|linebreaks}}<div class="time">{{i.datecreate}}</div></div>
+			{% endfor %}
+		</div>	
+		<div style="height: 30px;"></div>
+{% endblock AST_content %}

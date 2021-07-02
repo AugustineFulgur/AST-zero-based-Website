@@ -1,0 +1,18 @@
+{% extends '__template__.html' %}
+{% load static %}
+
+{% block AST_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'blogsrc/css/block_serie.css' %}"/>
+{% endblock AST_head %}
+
+{% block AST_content %}
+		<div style="height: 50px;width: 3%;float:left;" class="back shadowback"></div>
+		<div style="height: 50px;width: 3%;float:right;" class="back shadowback"></div>
+		<div class="shadowback back aline"><h2>{{blocks}}|系列文章</h2></div> <!--由于使用了block，不能使用block作为传递值-->
+		{% for i in serie %}
+			<div class="shadowback back borderlist">
+				<a href="/serie/{{i.series}}" >{{i.series}}</a>
+				<p class="time">{{i.time}}</p>
+			</div>
+		{% endfor %}
+{% endblock AST_content %}

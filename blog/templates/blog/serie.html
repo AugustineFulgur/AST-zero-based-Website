@@ -1,0 +1,19 @@
+{% extends '__template__.html' %}
+{% load static %}
+
+{% block AST_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'blogsrc/css/block_serie.css' %}"/>
+{% endblock AST_head %}
+
+{% block AST_content %}
+		<div style="height: 50px;width: 3%;float:left;" class="back shadowback"></div>
+		<div style="height: 50px;width: 3%;float:right;" class="back shadowback"></div>
+		<div class="shadowback back aline"><h2>{{serie}}|系列文章</h2></div>
+		<div class="shadowback back introduction">{{introduction}}</div>
+		{% for i in article %}
+			<div class="shadowback back borderlist">
+				<a href="/article/{{i.id}}" >{{i.docname}}</a>
+				<p class="time">{{i.typename}}&#12288;{{i.setname|default:"无所属系列"}}&#12288;{{i.datelast}}</p>
+			</div>
+		{% endfor %}
+{% endblock AST_content %}

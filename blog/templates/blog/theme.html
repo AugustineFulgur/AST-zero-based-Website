@@ -1,0 +1,194 @@
+{% extends '__template__.html' %}
+{% load static %}
+
+{% block AST_head %}
+<meta charset="utf-8"/>
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache"><!--这三行声明不使用缓存-->
+<meta name="Keywords" content="#@SIGN@#博客的关键词，关键词之间用英文逗号隔开">
+<meta name="Description" content="#@SIGN@#博客描述，是一段话">
+<link rel="stylesheet" type="text/css" href="{% static 'blogsrc/css/template.css' %}"/>
+<!--在html5之后已经不是必要的标签了type="text/javascript"-->	
+<script src="{% static 'blogsrc/js/jquery-3.5.1.js' %}"	></script>
+<script type="text/javascript">
+		var diary=10;
+		var next=0;
+		var pagenum=1;
+function page(i){
+    if(next+i<0){
+        alert("没有上一页了。");
+        return;
+    }
+    next=next+i;
+	pagenum=pagenum+i/10;
+    $.ajax(
+        {
+            url:"_ajax/_article/"+next.toString(),
+            type:"post",
+            success:function write(response){
+                var root=document.getElementById("ajaxlist");
+				root.innerHTML="";//先把内容删除了
+                for(var i=0;i<response.length;i++){
+                    if(response[i].setname==""){
+                        response[i].setname="无所属系列";
+                    }
+                    var newman=document.createElement("div");
+                    newman.classList.add("borderlist");
+					newman.classList.add("back");
+					newman.classList.add("shadowback");
+                    var newa=document.createElement("a");
+                    var texta=document.createTextNode(response[i].docname)
+                    var newtime=document.createElement("p");
+                    newtime.classList.add("time");
+                    var texttime=document.createTextNode(response[i].typename+"  "+response[i].setname+"  "+typetime(response[i].datelast));
+                    newa.appendChild(texta);
+					newa.setAttribute("href","article/"+response[i].id);
+                    newman.appendChild(newa);
+                    newtime.appendChild(texttime);
+                    newman.appendChild(newtime);
+                    root.appendChild(newman);
+                }
+				document.getElementById("pagement").value=pagenum+i/10;
+            },
+			error:function nonext(){
+				alert("没有下一页了。");
+				next=next-i;
+				pagenum=pagenum-1;
+        	}
+	}
+    )
+}
+function typetime(time){
+	time=time.replace(/-/,"年");
+	time=time.replace(/-/,"月");
+	time=time.replace(/T/,"日 ");
+	time=time.replace(/Z/,"");
+	time=time.split("").reverse().join("").replace(/([1-9]\d*\.?\d*:)|(0\.\d*[1-9]:)/,"").split("").reverse().join("");
+	return time;
+}	
+	</script>
+	<style>
+	.background{
+		background: #EEEEEE;
+		min-height: 800px;
+		/*#@SIGN@#如果要给博客首页添加背景图片，就把下面的注释号删除，然后替换为你的静态文件*/
+		/*url("{% static 'blogsrc/image/backgroundsea.jpg' %}");*/
+		/*background-attachment:scroll;*/
+		background-repeat: no-repeat;
+		background-size: cover;
+	}/*因为只有在这里才能访问到静态文件*/
+	</style>
+{% endblock AST_head %}
+
+{% block AST_aside %}
+<aside class="rootaside shadowback" id="jsaside">
+	<ul class="ulaside" id="ulaside">
+		<il class="root">文章分区</il>
+		{% for i in blocks %}
+		<li class="ilaside">
+			<a href="/block/{{i.blocks}}">{{i}}</a>
+		</li> <!--靠一些文盲取class名...-->
+		{% endfor %}
+	</ul>	
+</aside>
+{% endblock AST_aside %}
+
+{% block AST_content %}
+		<div class="searchbox shadowback back">
+			<form id="blogsearch" action="_search" method="post">
+				{% csrf_token %}
+				<input class="search" value=" " name="search"/>
+				<input class="submit" type="submit" value="查询站内文章">
+			</form>
+		</div>
+		<div class="articlelist" id="ajaxlist">
+		{% load tags %}
+		{% for i in article %}
+			<div class="borderlist back shadowback">
+				<a href="article/{{i.id}}" >{{i.docname}}</a>
+				<p class="time">{{i.typename}}&#12288;{{i.setname}}&#12288;{{i.datecreate}}</p>
+			</div>
+		{% endfor %}
+		</div>	
+			<div style="height: 50px;width: 3%;float:left;" class="back shadowback"></div>
+			<div style="height: 50px;width: 3%;float:right;" class="back shadowback"></div>
+			<div style="height: 50px;width: 90%;margin-bottom: 20px;margin-left: 5%; position: relative;" class="back shadowback"><!--我这人确实很花里胡哨-->
+				<ul class="btnul">
+				<li><button class="submit pagebtn"  onClick="page(-10)" style="float: left;left: 10%;">上一页</button></li> 
+				<li><div style="text-align: center"><input id="pagement" value="1" class="flexable" readonly="False"></div></li> 
+				<li><button class="submit pagebtn" onClick="page(10)" style="float: right;right: 10%;">下一页</button></li>
+			</ul>
+			</div>		
+		<div style="background: #FFFFFF;opacity: 0.9;" id="diaryroot">
+		{% load tags %}
+		{% for i in diary %}
+			<div class="xzone shadowback">
+				<div class="diarytime">发布时间：{{i.time}}</div>
+				<div class="diarytext">{{i.text|linebreaks}}
+					<div style="text-align: center; margin-bottom:10px;">
+					{% if i.img != "" %}
+						{% load tags %}
+						{% for n in i.img|_breakimg %}
+						<img src="/static/blog/{{i.img}}" style="float: inherit;width: 70%;margin: auto;">
+						{% endfor %}
+					{% endif %}
+					</div>	
+					</div>
+			</div>	
+		{% endfor %}
+		</div>	
+		<div class="back shadowback ajaxdiv" id="ajaxmore">查看更多</div>
+		<script>
+$("#ajaxmore").click(function(){
+	 $.ajax(
+        {
+            url:"_ajax/_diary/"+diary.toString(),
+            type:"post",
+			data:{csrfmiddlewaretoken:'{{ csrf_token }}'},
+            success:function write(response){
+                var root=document.getElementById("diaryroot");
+				for(var i=0;i<response.length;i++){
+                    var newdiary=document.createElement("div");
+                    newdiary.classList.add("xzone");
+					newdiary.classList.add("shadowback");
+                    var newtime=document.createElement("div");
+					newtime.classList.add("diarytime");
+                    var timediv=document.createTextNode("发布时间："+response[i].time);
+					newtime.appendChild(timediv);
+                    var newtext=document.createElement("div");
+                    newtext.classList.add("diarytext");
+					ntext=response[i].text.split("\n");
+					var textp=document.createElement("p");
+					for(var x=0;x<ntext.length;x++){
+						textp.appendChild(document.createTextNode(ntext[x]));
+						if(x+1!=ntext.length){
+							textp.appendChild(document.createElement("br"));
+						}
+					}
+					newtext.appendChild(textp);
+					var divimg=document.createElement("div");
+					divimg.classList.add("nt");
+					newtext.appendChild(divimg);
+					var diaryimg=response[i].img.split("!#!");
+					for(var a=0;a<diaryimg.length;a++){
+						if(diaryimg[a]!=""){
+						var imgadd=document.createElement("img");
+						imgadd.src="static/blog/"+diaryimg[a];
+						imgadd.classList.add("ajaximg");
+						divimg.appendChild(imgadd);
+						}
+					}
+                    newdiary.appendChild(newtime);
+					newdiary.appendChild(newtext);
+					root.appendChild(newdiary);
+					diary=diary+10;
+                }
+            },
+			error:function nonext(){
+				$("#ajaxmore").html("没有了哟~");
+        	}
+	}
+    )
+})		</script>	
+{% endblock AST_content %}

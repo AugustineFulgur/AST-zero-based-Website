@@ -1,0 +1,70 @@
+<!doctype html>
+{% load static %}
+<html>
+
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache"><!--这三行声明不使用缓存-->	
+{% block AST_head %}
+	<!--头部-->
+{% endblock AST_head %}
+<title>#@SIGN@#你的博客名</title>	
+<link rel="icon" href="{% static 'blogsrc/image/#@SIGN@#博客图标' %}" type="image/x-icon"/>	
+<link rel="shortcut icon" href="{% static 'blogsrc/image/博客图标' %}" type="image/x-icon"/>	
+<link rel="stylesheet" type="text/css" href="{% static 'blogsrc/css/theme.css' %}"/>
+<script type="text/javascript" src="{% static 'blogsrc/json/theme.json' %}"></script>
+<script src="{% static 'blogsrc/js/jquery-3.5.1.js' %}"	></script>	
+<style>
+	.background{
+		background: #EEEEEE;
+		min-height: 800px;
+		/*url("{% static 'blogsrc/image/backgroundsea.jpg' %}");*/
+		/*background-attachment:scroll;*/ /*一张背景图片，去掉注释修改文件名即可启用*/
+		background-repeat: no-repeat;
+		background-size: cover;
+	}/*因为只有在这里才能访问到静态文件*/
+</style>
+</head>
+
+<body>
+	<header class="back">
+		<ul class="ul-line">
+			<li>
+				<!--title在鼠标移到上面时会有提示-->
+				<a href="/" title="首页"><img src="{% static 'blogsrc/image/#@SIGN@#博客图标' %}" style="height: 30px; margin-bottom: 5px; margin: 0;" alt="图片失效了哦"></a>
+			</li>
+			<li>
+				<h2 style="margin: 0; padding: 0;">#@SIGN@#你的博客名</h2>
+			</li>
+			<li>
+				<a href="" title="请使用邮箱向我发送邮件">联系我</a>
+			</li>
+			<li>
+				<a href="#@SIGN@#对应的链接">#@SIGN@#建议填写网站介绍的链接</a>
+			</li>
+		</ul>
+	</header>
+	<div class="background">
+	<!--占位用的div-->
+	<div style="height: 60px"></div>
+		{% block AST_aside %}
+		<!--侧边栏-->
+		{% endblock AST_aside %}
+	<article>
+		{% block AST_content %}
+		<!--内容-->
+		{% endblock AST_content %}
+	</article>
+	<div style="height: 30px;"></div>	
+	</div>
+	<div class="tail">
+		<ul style="margin: 0; padding: 0;">
+			<li><a href="">#@SIGN@#一个链接地址</a></li>
+			<li><p><strong>powerd by</strong>&nbsp;AugustTheodor</p></li>
+			<li><a href="http://www.beian.miit.gov.cn/">#@SIGN@#你的备案号，或者其他要写的</a></li>
+		</ul>
+	</div>
+</body>
+</html>
